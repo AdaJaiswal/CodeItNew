@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        #form {
+            display: flex;
+            margin: auto;
+            background-color: black;
+            width: 60vw;
+            height: 45vw;
+            margin-top: 4vw;
+            border-radius: 1vw;
+            font-family: 'Quicksand', sans-serif;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #i1 {
+            height: 45vw;
+            /* height: 512px;
+            wdth: 512px; */
+            margin-left: -3.1vw;
+            border-radius: 1vw;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        }
+
+        #data {
+            color: white;
+            list-style: none;
+            width: 100%;
+            border-radius: 1vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2vw;
+        }
+
+        input {
+            outline: none;
+            border: 0px transparent;
+            background-color: transparent;
+            color: white;
+            border-bottom: 1px solid rgb(95, 95, 95);
+            width: 100%;
+            padding-bottom: 0.5vw;
+            font-size: 1.2vw;
+            margin-top: 3vw;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 5vw;
+
+            text-align: center;
+        }
+
+        input::placeholder {
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+
+        }
+
+        #heading {
+            font-size: 1.5vw;
+            margin-top: 5vw;
+        }
+
+        #submit {
+            background-color: green;
+            color: white;
+            border-radius: 5vw;
+            font-size: 1.2vw;
+            padding: 0.5vw 1vw;
+            margin-top: 3vw;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.5s;
+
+        }
+
+        #submit:hover {
+            background-color: aliceblue;
+            color: black;
+        }
+
+        .size {
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 3px;
+            color: white;
+            width: 10vw;
+            padding: 0.7vw 0;
+            font-family: 'Quicksand', sans-serif;
+            margin: 1vw 0;
+
+        }
+    </style>
+
+    <body>
+        <div id='form'>
+            <ul>
+                <li><img id='i1' src='1479.gif' alt=''></li>
+            </ul>
+            <ul id='data'>
+
+                <li>
+                    <input type='text' name='Name' id='name' placeholder='Name'>
+                </li>
+                <li>
+                    <button class="size" value="256x256">256x256</button>
+                </li>
+                <li>
+                    <button class="size" value="512x512">512x512</button>
+                </li>
+                <li>
+                    <button class="size" value="1024x1024">1024x1024</button>
+                </li>
+                <li><button id='submit'>Submit</button></li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        const submit = document.getElementById("submit")
+        const name = document.getElementById("name")
+        const img = document.getElementById("i1")
+        const size = document.querySelectorAll('.size')
+        var sizeVal = "512x512"
+        size.forEach(element => {
+            element.addEventListener('click', function handleClick(event) {
+                console.log('box clicked', event);
+                removeColor(size)
+                console.log(element.value)
+                sizeVal = element.value
+                element.setAttribute('style', 'background-color: white;color:black')
+            });
+        });
+        submit.addEventListener("click", async function () {
+            i1.src = "1479.gif"
+            var oData = await fetch("http://localhost:3000/getImage", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: name.value, size: sizeVal })
+            })
+            var d = await oData.json()
+            i1.src = d.link
+        })
+        function removeColor(a) {
+            a.forEach(element => {
+                element.setAttribute('style', 'background-color: transparent;color:white')
+            })
+        }
+    </script>
+
+</html>

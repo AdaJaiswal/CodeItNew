@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        transition: all 0.5s;
+    }
+
+    body {
+        /* background-color: #8c19ff1a; */
+        background-color: black;
+    }
+
+    #form {
+        display: flex;
+        margin: auto;
+        background-color: black;
+        width: 60vw;
+        height: 45vw;
+        margin-top: 4vw;
+        border-radius: 1vw;
+        font-family: 'Quicksand', sans-serif;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 5px #0ff;
+
+
+    }
+
+
+    #i1 {
+        height: 45vw;
+        /* height: 512px;
+        wdth: 512px; */
+        /* margin-left: -3.1vw; */
+        border-radius: 1vw;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+
+    #data {
+        color: white;
+        list-style: none;
+        width: 100%;
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        outline: none;
+        border: 1px solid white;
+        background-color: transparent;
+        color: white;
+        width: 30vw;
+        padding-bottom: 0.5vw;
+        font-lang: 1.2vw;
+        margin-top: 3vw;
+        font-family: 'Quicksand', sans-serif;
+        text-align: center;
+        /* border-bottom: 1px solid white; */
+        margin-bottom: 4vw;
+        padding: 1vw;
+    }
+
+    input::placeholder {
+        color: white;
+        font-family: 'Quicksand', sans-serif;
+
+    }
+
+    input::placeholder:hover {
+        color: black;
+        font-family: 'Quicksand', sans-serif;
+
+    }
+
+    input:hover {
+        box-shadow: 0px 0px 10px 5px #0ff;
+        border: 1px solid #0ff;
+        background-color: white;
+        color: black;
+    }
+
+    input:active {
+        box-shadow: 0px 0px 10px 5px #0ff;
+    }
+
+    #heading {
+        font-lang: 1.5vw;
+        margin-top: 5vw;
+    }
+
+    #submit {
+        background-color: green;
+        color: white;
+        border-radius: 5vw;
+        font-lang: 1.2vw;
+        padding: 0.5vw 1vw;
+        margin-top: 3vw;
+        font-family: 'Quicksand', sans-serif;
+        transition: all 0.5s;
+
+    }
+
+    #submit:hover {
+        background-color: aliceblue;
+        color: black;
+    }
+
+    .lang {
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 3px;
+        color: white;
+        width: 10vw;
+        padding: 0.7vw 0;
+        font-family: 'Quicksand', sans-serif;
+
+    }
+
+    .options {
+        display: flex;
+    }
+
+    .options button {
+        margin: 1vw;
+    }
+
+    #txt {
+        width: 100%;
+        margin-top: 1vw;
+    }
+
+    #txt textarea {
+        width: 95%;
+        /* margin: 2vw; */
+        margin-top: 2vw;
+    }
+
+
+    #nameLi hr:nth-child(2) {
+        height: 1px;
+        /* width: 10%; */
+        background-color: aqua;
+        border: none;
+        /* transform: rotate(180deg); */
+        /* animation: mymove 5s infinite alternate; */
+        box-shadow: 0px 0px 2px 1px #0ff;
+
+        /* animation-direction: alternate, reverse, normal; */
+    }
+
+    #nameLi hr:nth-child(3) {
+        /* width: 10%; */
+        height: 1px;
+        background-color: white;
+        border: none;
+        transform: rotate(160deg);
+        /* animation: mymove 5s infinite alternate; */
+        box-shadow: 0px 0px 2px 1px #0ff;
+
+        /* animation-direction: alternate, reverse, normal; */
+    }
+
+    textarea {
+        background-color: transparent;
+        color: white;
+        /* font-lang: 1.2vw; */
+        padding-top: 0.5vw;
+        padding-left: 0.7vw;
+        margin-left: -0.6vw;
+
+    }
+
+    textarea::placeholder {
+        padding: 1vw;
+    }
+
+    #translator {
+        color: white;
+        font-family: 'Quicksand', sans-serif;
+        font-lang: 2vw;
+        color: white;
+        font-weight: 400;
+    }
+
+    #LT {
+        background-color: #198754;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -3vw;
+        margin-left: -2.5vw;
+        padding: 2.2vw 2vw;
+        /* overflow: hidden; */
+    }
+
+    hr {
+        margin-top: 2vw;
+        width: 105%;
+    }
+
+    #name:hover {
+        box-shadow: 0px 0px 40px 20px #0ff;
+        background-color: red;
+
+    }
+
+    button:hover {
+        box-shadow: 0px 0px 10px 5px #0ff;
+        border: 1px solid #0ff;
+        background-color: white;
+        color: black;
+    }
+
+    .shadow {
+        box-shadow: 0px 0px 10px 5px #0ff;
+        border: 1px solid #0ff;
+        background: white;
+        color: black;
+    }
+
+    .options {
+        margin-left: -2vw;
+    }
+
+    #nameLi {
+        margin-left: -2vw;
+    }
+
+    #submit {
+        margin-left: -2vw;
+        border: 1px solid transparent;
+    }
+</style>
+
+<body>
+    <div id='form'>
+        <ul id='data'>
+            <li id="LT">
+                <p id="translator">GPT3 - TRANSLATOR</p>
+            </li>
+            <li id="nameLi">
+                <input id="desc" type='text' name='text' placeholder='Enter Text'>
+            </li>
+            <li class="options">
+                <button class="lang" value="Hindi">Hindi</button>
+                <button class="lang" value="Korean">Korean</button>
+                <button class="lang" value="Japanese">Japanese</button>
+                <button class="lang" value="French">French</button>
+            </li>
+            <li id="txt">
+                <textarea name="" id="textarea" cols="30" rows="10" placeholder="Your translator"></textarea>
+            </li>
+            <li><button id='submit'>Submit</button></li>
+        </ul>
+    </div>
+</body>
+<script>
+    const submit = document.getElementById("submit")
+    const desc = document.getElementById("desc")
+    const textarea = document.getElementById("textarea")
+    const lang = document.querySelectorAll('.lang')
+    let langArr = []
+    let prompt = "Translate this into "
+    lang.forEach(element => {
+        element.addEventListener('click', function handleclick(event) {
+
+            if (langArr.includes(element.value)) {
+                removeColor(element)
+                langArr.splice(langArr.indexOf(element.value), 1)
+                console.log(langArr)
+                return;
+            }
+            langArr.push(element.value)
+            langArr.sort()
+            console.log(langArr)
+            element.setAttribute("style", "background-color:white;color:black")
+        })
+    })
+    function removeColor(element) {
+        element.setAttribute("style", "background-color:transparent;color:white")
+    }
+
+    submit.addEventListener("click", async function () {
+        for (let i = 0; i < langArr.length; i++) {
+            let k = i + 1;
+            prompt = prompt + k + ". " + langArr[i] + ","
+        }
+        prompt = prompt + ": " + desc.value
+        console.log(prompt)
+        textarea.classList.add("shadow")
+        var oData = await fetch("http://localhost:3000/getText", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ prompt: prompt })
+        })
+        var d = await oData.json()
+        textarea.textContent = d.text
+    })
+    desc.addEventListener("click", function () {
+        textarea.classList.remove("shadow")
+    })
+
+</script>
+
+</html>

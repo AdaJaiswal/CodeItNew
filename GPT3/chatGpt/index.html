@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Quicksand', sans-serif;
+        transition: all 1s;
+    }
+
+    body {
+        background: linear-gradient(#e66465, #b607f6);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        /* -webkit-filter: blur(8px); */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .blur {
+        background-color: rgb(255 255 255 /40%);
+        /* opacity: 0.3; */
+        /* filter: blur(5px); */
+    }
+
+    .dv {
+        height: 95%;
+        width: 60%;
+        border-radius: 2vw;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+
+    }
+
+    .ttl {
+        margin-top: 1vw;
+        font-size: 2.5vw;
+        color: white;
+        font-weight: 500;
+    }
+
+    .aiUl {
+        list-style: none;
+        width: 70%;
+        /* height: 90%; */
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        margin-top: 2vw;
+        overscroll-behavior: revert;
+        white-space: pre-wrap;
+
+    }
+
+    .aiUl::-webkit-scrollbar {
+        display: none;
+    }
+
+    .aiUl li {
+        width: 80%;
+        /* min-height: 2.5vw; */
+        height: fit-content;
+        padding: 1vw;
+        background-color: rgb(255 255 255 /60%);
+        border-radius: 1vw;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin: 0.6vw 0;
+        color: rgb(93, 93, 93);
+        font-size: 1.2vw;
+    }
+
+    textarea {
+        width: 100%;
+        height: fit-content;
+        background-color: transparent;
+        border: 0px;
+        color: rgb(93, 93, 93);
+        font-size: 1.2vw;
+        resize: none;
+        overflow: hidden;
+    }
+
+    textarea::-webkit-scrollbar {
+        display: none;
+    }
+
+    lottie-player {
+        position: absolute;
+        width: fit-content;
+        height: fit-content;
+        left: 240px;
+        bottom: -60px;
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="blur dv">
+        <lottie-player id="loader" src="https://assets3.lottiefiles.com/packages/lf20_M3al0h.json"
+            background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></lottie-player>
+        <h2 class="ttl">SPEAKGPT</h2>
+        <ul class="aiUl" id="ai">
+            <li>hello sir ..</li>
+        </ul>
+    </div>
+</body>
+<script>
+    const aiUl = document.getElementsByClassName("aiUl")[0]
+    const SPEAKGPT = document.getElementsByClassName("ttl")[0]
+    const loader = document.getElementById("loader")
+    function speech() {
+        var speech = true;
+        window.SpeechRecognition = window.webkitSpeechRecognition;
+
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        if (speech == true) {
+            recognition.start();
+        }
+        recognition.addEventListener('result', e => {
+            console.log(Array.from(e.results).slice(-1)[0][0].transcript)
+            console.log(e.results)
+            if (Array.from(e.results).slice(-1)[0][0].transcript.toLowerCase().includes("jarvis")) {
+                e.results = {}
+                console.log("found")
+                e.results = {}
+            }
+            const transcript = Array.from(e.results)
+                .map(result => {
+                    return result[0]
+                })
+                .map(result => {
+                    return result.transcript
+                })
+                .join('')
+
+
+        });
+    }
+    speech()
+    SPEAKGPT.addEventListener("click", async function () {
+
+        loader.style.display = "unset"
+        let prompt = "20 books to know about the future technology and futuristic technoloy ideas"
+        var oData = await fetch("http://localhost:3000/talk", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ prompt: prompt })
+        }
+        )
+        var d = await oData.json()
+        aiUl.appendChild(document.createElement("li")).innerHTML = `${d.response}`
+        aiUl.scrollTop = aiUl.scrollHeight
+        console.log("clicked")
+        loader.style.display = "none"
+
+    })
+
+</script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</html>

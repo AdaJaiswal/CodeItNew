@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onile Compiler</title>
+    <link rel="stylesheet" href="codemirror-5.65.9/lib/codemirror.css">
+    <link rel="stylesheet" href="codemirror-5.65.9/theme/dracula.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="codemirror-5.65.9/lib/codemirror.js"></script>
+    <script src="codemirror-5.65.9/mode/clike/clike.js"></script>
+    <script src="codemirror-5.65.9/mode/python/python.js"></script>
+    <script src="codemirror-5.65.9/addon/edit/closetag.js"></script>
+    <script src="codemirror-5.65.9/addon/edit/closebrackets.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</head>
+</head>
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+
+<body>
+    <div class="row m-3">
+        <div class="col">
+            <div class="d-flex justify-content-between bg-dark rounded mb-2  py-2 px-2">
+                <div class="col-12 w-25 ">
+                    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                    <select class="form-select" id="inlineFormSelectPref">
+                        <option selected>Choose...</option>
+                        <option value="Java">Java</option>
+                        <option value="Cpp">CPP</option>
+                        <option value="Python">Python</option>
+                    </select>
+                </div>
+                <div class="">
+                    <button type="button" class="btn btn-success">Code Runner </button>
+                    <button type="button" class="btn btn-success" id="run"><i class="bi bi-play-fill"></i></button>
+                </div>
+
+            </div>
+            <textarea id="editor" class="form-control" placeholder="First name" aria-label="First name"></textarea>
+        </div>
+        <div class="col d-flex flex-column rounded bg-dark px-4" style="height: 565px;">
+            <div class="h-50">
+                <label for="Input" class="mb-2 text-light mt-4">Input</label>
+                <textarea class="form-control h-75" placeholder="" id="input" aria-label="First name"></textarea>
+            </div>
+            <div class="h-50">
+                <label for="Input" class="mb-2 text-light">Output</label>
+                <textarea class="form-control h-75" style="" placeholder="" aria-label="First name"
+                    id="output"></textarea>
+            </div>
+
+        </div>
+    </div>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded mx-4">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1"><i class="bi bi-check2-circle"></i> Input</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2"><i class="bi bi-x-circle"></i> Input</label>
+        </div>
+    </div>
+    <script>
+        var edTxt = document.getElementById("editor")
+        var code
+        const run = document.getElementById("run")
+        const output = document.getElementById("output")
+        const input = document.getElementById("input")
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"),
+            {
+                mode: "text/x-c++src",
+                theme: "dracula",
+                lineNumbers: true,
+                autoCloseTags: true,
+                autoCloseBrackets: true,
+
+            })
+
+        var width = window.innerWidth
+        console.log(width)
+        editor.setSize(0.7 * width, "500")
+        var option = document.getElementById("inlineFormSelectPref")
+        option.addEventListener("change", function () {
+            if (option.value == "Java") {
+                editor.setOption("mode", "text/x-java")
+            }
+            else if (option.value == "Python") {
+                editor.setOption("mode", "text/x-python")
+            }
+            else {
+                editor.setOption("mode", "text/x-c++src")
+            }
+            console.log(option.value)
+        })
+        run.addEventListener("click", async function () {
+            code = {
+                code: editor.getValue(),
+                lang: option.value,
+                input: input.value
+            }
+            var oData = await fetch("http://localhost:8000/compile", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(code)
+            })
+            var d = await oData.json()
+            output.value = d.output
+            console.log(await oData.json())
+        })
+
+        // document.getElementById("Input").width = 0.3 * width
+    </script>
+</body>
+
+</html>
